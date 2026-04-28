@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 4월 영업 부진센터 운영 현황 점검</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #334155;
+            --accent: #3b82f6;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+            color: var(--secondary);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: white;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
+        .header-meta { text-align: right; }
+        .header-meta p { margin: 3px 0; font-size: 14px; opacity: 0.9; }
+
+        /* Layout */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 30px auto;
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: 250px;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .nav-title { font-weight: 700; color: #64748b; margin-bottom: 15px; font-size: 13px; padding-left: 10px; }
+        .nav-btn {
+            display: flex; justify-content: space-between; align-items: center;
+            width: 100%; text-align: left; padding: 12px 15px;
+            background: none; border: none; border-radius: 8px; color: #475569;
+            font-size: 15px; font-weight: 600; cursor: pointer; transition: 0.2s;
+            margin-bottom: 5px;
+        }
+        .nav-btn:hover { background: #f1f5f9; color: var(--accent); }
+        .nav-btn.active { background: #eff6ff; color: var(--accent); }
+        
+        /* 점유율 뱃지 스타일 */
+        .nav-rate { font-size: 13px; font-weight: 700; color: var(--danger); text-align: right; }
+        .nav-rate.multi { font-size: 11.5px; line-height: 1.4; } 
+        .nav-rate.empty { color: #94a3b8; font-weight: 500; } 
+        .nav-btn.active .nav-rate { color: var(--accent); }
+
+        /* Main Content */
+        .content-area {
+            flex: 1;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 35px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            min-height: 800px;
+        }
+
+        .tab-pane { display: none; animation: fadeIn 0.4s ease; }
+        .tab-pane.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .center-header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .center-header h2 { margin: 0; font-size: 26px; color: var(--primary); }
+
+        /* Grid Cards for 8 Sections */
+        .section-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            background: #fafafa;
+        }
+        .card.full { grid-column: span 2; }
+        
+        .card h3 {
+            margin-top: 0; font-size: 16px; color: var(--primary);
+            border-left: 4px solid var(--accent); padding-left: 10px; margin-bottom: 15px;
+        }
+
+        /* Typography & Tables */
+        ul { padding-left: 20px; margin: 0; }
+        li { margin-bottom: 6px; font-size: 14px; }
+        p { margin: 0 0 8px 0; font-size: 14px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 13px; background: white; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background: #f8fafc; font-weight: 600; }
+        
+        .highlight { color: var(--danger); font-weight: bold; }
+        .sub-text { font-size: 12px; color: #64748b; }
+
+        /* Enhanced Feedback Box - NEW INTEGRATED TIMELINE */
+        .feedback-box {
+            background: #ffffff; border: 1px solid #bbf7d0;
+            padding: 25px; border-radius: 10px; margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(34, 197, 94, 0.05);
+        }
+        .feedback-title {
+            font-size: 18px; color: #166534 !important; margin-top: 0; margin-bottom: 15px; 
+            border-left: 4px solid #22c55e !important; display: flex; align-items: center; gap: 8px;
+            padding-left: 10px;
+        }
+        .feedback-summary {
+            font-size: 14.5px; color: #374151; margin-bottom: 25px; line-height: 1.6;
+            background: #f0fdf4; padding: 15px; border-radius: 8px;
+        }
+
+        /* --- 유기적 흐름 타임라인 CSS --- */
+        .integrated-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .flow-item {
+            display: flex;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .flow-item:hover {
+            border-color: #22c55e;
+            box-shadow: 0 2px 6px rgba(34, 197, 94, 0.1);
+            transform: translateX(3px);
+        }
+        .flow-cause {
+            flex: 0 0 35%;
+            background: #f8fafc;
+            padding: 16px 20px;
+            border-right: 2px dashed #cbd5e1;
+            font-size: 13.5px;
+            color: #475569;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .flow-cause strong {
+            color: #0f172a;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .flow-action {
+            flex: 1;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+        .action-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        
+        .status {
+            padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; white-space: nowrap;
+            display: inline-block; text-align: center; width: 60px;
+        }
+        .status.doing { background: #fef08a; color: #854d0e; } /* 진행중 */
+        .status.todo { background: #fee2e2; color: #991b1b; } /* 예정 */
+        .status.done { background: #dcfce3; color: #166534; } /* 완료 */
+        .status.check { background: #e0e7ff; color: #3730a3; } /* 확인필요 */
+        .action-desc { flex: 1; line-height: 1.5; }
+        .action-desc strong { color: #0f172a; margin-right: 5px; }
+
+        /* Master Board 전용 추가 CSS */
+        .master-table { width: 100%; border-collapse: collapse; font-size: 12.5px; background: white; table-layout: fixed; }
+        .master-table th, .master-table td { border: 1px solid var(--border); padding: 12px; text-align: left; vertical-align: top; line-height: 1.6; }
+        .master-table th { background: #f8fafc; font-weight: 700; color: var(--primary); text-align: center; }
+        
+        .action-item { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed #e2e8f0; display: block; }
+        .action-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .cat { padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; margin-right: 6px; display: inline-block; vertical-align: middle; }
+        .cat.mkt { background: #dbeafe; color: #1e40af; } 
+        .cat.op { background: #fef3c7; color: #92400e; }  
+        .cat.edu { background: #ede9fe; color: #5b21b6; } 
+        .cat.hr { background: #fce7f3; color: #9d174d; }  
+
+        .st-tag { font-size: 10.5px; font-weight: 700; color: #64748b; margin-left: 8px; font-style: normal; }
+        .st-tag.doing { color: #854d0e; }
+        .st-tag.todo { color: #b91c1c; }
+        .st-tag.check { color: #3730a3; }
+        .st-tag.done { color: #15803d; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>2026년 4월 영업 부진센터 운영 현황 점검</h1>
+    </div>
+    <div class="header-meta">
+        <p>주관부서: 잇올영업본부</p>
+        <p>기준일자: 26년 4월 26일 기준 (4/22~4/28 피드백 반영)</p>
+    </div>
+</header>
+
+<div class="container">
+    <nav>
+        <div class="nav-title">종합 대시보드</div>
+        <button class="nav-btn active" onclick="openTab(event, 'tab0')" style="background: #f0fdf4; border: 1px solid #bbf7d0; margin-bottom: 15px;">
+            <span style="color: #166534;">📊 종합 액션 플랜</span>
+            <span class="nav-rate" style="color: #166534;">Master</span>
+        </button>
+
+        <div class="nav-title">부진센터 리스트 (13개)</div>
+        <button class="nav-btn" onclick="openTab(event, 'tab1')">
+            <span>동탄/1캠프</span> <span class="nav-rate multi">동탄 69.92%<br>1캠프 23.58%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab2')">
+            <span>수원영통 1, 2</span> <span class="nav-rate multi">1관 79.74%<br>2관 63.27%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab3')">
+            <span>안산</span> <span class="nav-rate">66.94%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab4')">
+            <span>김포</span> <span class="nav-rate">85.5%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab5')">
+            <span>김해</span> <span class="nav-rate">78.1%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab6')">
+            <span>일산백마</span> <span class="nav-rate">76.6%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab7')">
+            <span>천안 1, 2관</span> <span class="nav-rate multi">1관 67.18%<br>2관 49.41%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab8')">
+            <span>원주/강동</span> 
+            <span class="nav-rate multi">원주 48.95%<br>강동 79.8%</span>
+        </button>
+        <button class="nav-btn" onclick="openTab(event, 'tab9')">
+            <span>광주 수완/봉선</span> <span class="nav-rate multi">수완 68.24%<br>봉선 70.99%</span>
+        </button>
+    </nav>
+
+    <main class="content-area">
+        
+        <div id="tab0" class="tab-pane active">
+            <div class="center-header"><h2>전국 부진센터 액션 플랜 요약</h2></div>
+            <div class="card full">
+                <table class="master-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 12%">지점명</th>
+                            <th style="width: 28%">실무 회의 피드백 (Full)</th>
+                            <th style="width: 60%">상세 Action Plan 및 일정</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>동탄<br>1캠프</strong></td>
+                            <td>
+                                • 동탄 연합 마케팅 및 실시간 소통방(연합창) 구축<br>
+                                • 고등 프로그램/주말반 홍보 활성화<br>
+                                • 플래너 관리 5월 대기 없이 즉시 시작<br>
+                                • SNS(블로그/인스타) 노출 적극화
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat op">운영</span> 동탄 권역 원장진 연합창 생성 및 실무 소통 시작 <em class="st-tag doing">[진행중 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 원장 플래너 관리 프로그램 즉시 시행 가이드 <em class="st-tag doing">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 무료체험 이미지 제작 및 홍보 문자 일괄 발송 <em class="st-tag doing">[진행중 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 공식 인스타 노출 및 네이버 키워드 수정 본사 협의 <em class="st-tag todo">[예정 | 4/27 미팅]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 고등 종합 홍보 세부 기획안 및 맞춤형 홍보 배포 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 리더십 장학 및 시험기간 특별반 운영 기획 정리 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 학부모 생활 상담 OX 체크 시트 생성 및 활용 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 명문대 멘토 섭외 및 선배와의 대화 일정 배정 요청 <em class="st-tag doing">[진행중 | 5월 3주]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>수원영통<br>1, 2</strong></td>
+                            <td>
+                                • 러셀 장학 조건 분석 대응 장학 설계 지시<br>
+                                • 1, 2관 통합 보고 자료 포맷 개선 요망<br>
+                                • N수생 대상 '원장 직접 상담' 전면 전환
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat op">운영</span> 원장 특별 장학 30% TO 및 성적 커트라인 확정 전달 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 지정게시대 런칭 및 경희/아주대 반수생 타겟 홍보 <em class="st-tag todo">[예정 | 5월 중]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 고려대 선배와의 대화 행사 실시 <em class="st-tag todo">[예정 | 5월 중]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 외부생 대상 대규모 입시콘서트 개최 <em class="st-tag todo">[예정 | 6월 2주]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>안산</strong></td>
+                            <td>
+                                • 오프라인 홍보 강화(아파트/전단)<br>
+                                • 24시 연장 운영 유효성 정밀 검토<br>
+                                • 블로그 온라인 홍보 정상화<br>
+                                • 선배와의 만남(신규 멘토 활용)
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 아파트 게시판 3곳 확인 및 전단 횟수 상향 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 경쟁사 조사 기반 24시 연장 운영 유효성 검토 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 블로그 주 2회 발행 재개 및 AI 교육 실시 <em class="st-tag doing">[진행/예정 | 상시]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 신규 멘토 활용 '선배와의 만남' 기획/진행 <em class="st-tag todo">[예정 | 5월 1주차]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>김포</strong></td>
+                            <td>
+                                • 김포고 이탈자 방어(작년 약 10명) '환승 할인' 진행<br>
+                                • 사우역/김포고 월 1회 전단지 홍보 (점유율 90% 달성시까지)<br>
+                                • 명문대생 매니저 활용 '선배와의 만남' 행사 및 홍보<br>
+                                • 지역 내 영향력 있는 국어 학원에 상호 제휴 타진
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 사우역, 김포고 중심 전단지 홍보 진행 <em class="st-tag todo">[예정 | 5월 중]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 국어 학원에 제휴 가능성 컨택 후 보고 예정 <em class="st-tag todo">[예정 | 5월 1주차]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 김포 지정 게시대 9곳 현수막 게시 진행 <em class="st-tag todo">[예정 | 5월 1~3주차]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 교입팀 멘토 섭외하여 '명문대 선배와의 만남' 진행, 홍보 <em class="st-tag todo">[예정 | 5~6월 중]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 학부모 케어 문자 하루 10명 진행 <em class="st-tag todo">[예정 | 5월]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>김해</strong></td>
+                            <td>
+                                 • 장유 지역 셔틀 투입 미시행 (비용대비 수요 저조)<br>
+                                 • '김해 시내권 밀착 관리'를 통한 실질 점유율 회복<br>
+                                 • 재학생 프로모션을 활용한 매출 단가 방어 유지<br>
+                                 • 명문대 선배와의 만남 5월 중 진행 후 홍보 진행
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> '커넥츠프랩' 수능생 및 고시생 35만 원 동일 금액 확인 <em class="st-tag done">[완료 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 김해 CA 4/29(수) 출근으로 세팅 완료 <em class="st-tag done">[완료 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 교입팀 멘토 섭외하여 '명문대 선배와의 만남' 진행 <em class="st-tag todo">[예정 | 5~6월중]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>일산백마</strong></td>
+                            <td>
+                                • 입결/서울대 강점 활용 세일즈<br>
+                                • 상권 맞춤형 프로모션 즉각 시행<br>
+                                • 리더십 장학 도입 및 외부 6평 대응
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 퇴원생/고등 타겟 환승/당일결제 프로모션 발송 <em class="st-tag done">[완료 | 4/24]</em></div>
+                                <div class="action-item"><span class="cat hr">인사</span> 코치진 단계별 목표 공유 영업회의 개최 <em class="st-tag done">[완료 | 4/24]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 고등 리더십 장학 중복할인 제도 도입 요청 <em class="st-tag doing">[진행중 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat edu">교과</span> 본사 김동현 과장 주관 입시콘서트 일정 조율 <em class="st-tag doing">[진행중 | 4월 5주]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>천안<br>1, 2관</strong></td>
+                            <td>
+                                • '서울대 의대' 키워드 전면 홍보<br>
+                                • 노후 시설 대청소 및 1인실 중심 전략<br>
+                                • 현장 점검 습관 내재화<br>
+                                • 6평 대기수요자 아웃콜 집중
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 타 지점 플레이스 대문 사진 내 입결 삭제 협의 <em class="st-tag done">[완료 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> '천안 재수' 파워링크 최상단 노출 및 키워드 심사 <em class="st-tag doing">[진행중 | 4/24~27]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 6평 전화 문의 시 상담 유도 응대 매뉴얼 점검 <em class="st-tag check">[확인중 | 4/27 피드백]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 구/신도심 아파트 타겟 단지 광고 견적 확보 <em class="st-tag check">[확인중 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 홍보 문자 문안(입결 위주) 전면 교체 및 세일즈 교육 <em class="st-tag check">[확인중 | 4월 5주]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 1관 6평 대기자 87명 대상 전수 무료체험 아웃콜 <em class="st-tag todo">[예정 | 4월 5주]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>원주<br>강동</strong></td>
+                            <td>
+                                • 원주 부원장 태도 개선 및 인적 쇄신 검토<br>
+                                • 강동 스카 비교 마인드 타파 교육<br>
+                                • 입시 컨설팅 사전 홍보 돌입
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat hr">인사</span> 주정열 원장 유선 통화 및 현장 인사 이슈 감사 <em class="st-tag todo">[예정 | 4/27 중]</em></div>
+                                <div class="action-item"><span class="cat op">운영</span> 방치된 퇴원생 DB 정리 및 전수 아웃콜 재개 <em class="st-tag doing">[진행중 | 4/27 주간]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 전단지 오프라인 시안 처리 및 타겟 배포 완료 확인 <em class="st-tag doing">[진행중 | 4월 5주]</em></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>광주<br>수완/봉선</strong></td>
+                            <td>
+                                • 비대면 멘토 온라인 지원 강화 요청<br>
+                                • 봉선의 '하루 10건 통화' 사례 전파<br>
+                                • 대중교통 매체 광고 우회 검토
+                            </td>
+                            <td>
+                                <div class="action-item"><span class="cat op">운영</span> 광주 고등부 주말반 실제 수요 및 야자 연계성 정밀 파악 <em class="st-tag doing">[진행중 | 즉시]</em></div>
+                                <div class="action-item"><span class="cat mkt">마케팅</span> 대중교통(버스쉘터, 지하철) 옥외 매체 본사 컨펌 대기 <em class="st-tag todo">[예정 | 상시 협의]</em></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab1" class="tab-pane">
+            <div class="center-header"><h2>동탄1캠프 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">주변 업체 포화와 스카 수요 부족으로 인입이 저조함. 가지고 있는 재료(25시 운영, 주변 고교 장학 등)에 도전하지 않고 있어, 고등 프로그램(담임/플래너/교과/주말) 종합 정리 홍보가 시급함.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 연합 마케팅 및 목표 일원화</strong>
+                            동탄-동탄1캠 간 연합 마케팅 활동이 원활하지 않음. 원장과 캠퍼스 간 목표 일원화 및 실시간 소통 프로세스(연합 대화방) 구축 지시.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>즉시 (4/24~) :</strong> 동탄 지역 운영 일원화/ 동탄 권역 원장진 연합창 생성 및 실무 소통 시작</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 기본 프로그램 활성화 및 플래너</strong>
+                            기본 진행하는 고등 프로그램/주말반 홍보가 저조함. 또한 5월 예정인 플래너 관리를 미루지 않고 즉시 시작할 수 있도록 가이드.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>즉시 (4/24~) :</strong> 무료체험 홍보 문자에 활용할 쿠폰 이미지 제작 후 일괄 발송</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차~ :</strong> 고등(주말/평일반 포함) 대상 세부 운영 기획안 + 맞춤형 홍보 배포</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차~ :</strong> 운영 개선을 위한 학부모 생활 상담 OX 체크 시트 생성 및 활용</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 SNS 활성화 및 장학/멘토 보완</strong>
+                            본사 협조를 통해 블로그/인스타 노출 적극화 필요. 지역 특성에 맞춘 장학 및 명문대 선배 멘토 지원 요청.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4/27 미팅 :</strong> 잇올 공식 인스타에 부진 지점 노출 방안 및 네이버 키워드 수정 협의</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차~ :</strong> 지역 특성에 맞춰 리더십 장학 및 시험기간 특별반 세부 운영 기획안 정리</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>5월 3주차 :</strong> 본사 교입팀 연계 명문대 멘토 섭외 및 선배와의 대화 일정 배정 요청</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년</th><th>2026년 (현재)</th></tr>
+                        <tr><td>28.3% (30명)</td><td class="highlight">동탄 69.92%<br>1캠프 23.58%</td></tr>
+                    </table>
+                    <p class="sub-text">* 총 106석 중 26명 재원 (고등 26 / 주말반 2명)</p>
+                    <p class="sub-text">* 4/23 퇴소 의사 2명 -> 주말반 유도 요청하여 1명 주말반 전환 완료</p>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2~4월)</th><th>인입</th><th>결제</th><th>등록률</th></tr>
+                        <tr><td>N수</td><td>31</td><td>11</td><td>약 36%</td></tr>
+                        <tr><td>고등/중등</td><td>27</td><td>12</td><td>약 44%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 고등학교 평균 주1회 진행 중, 동탄 지역 연합 마케팅 계획 정리 필요. 아파트 5곳 2주 게시 중. 지정게시대 6월 예정.</li>
+                        <li><strong>온라인/SNS:</strong> 블로그 주1회 3개 업로드 중 (인스타 안 함). 네이버 노출 '관리형 독서실' 변경 진행 중.</li>
+                        <li><strong>특이사항:</strong> 오프라인 홍보 유입 감소 추세. 윈터스쿨 종료 후 잔류 학생들+스타벅스 친구소개 위주 유입.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입시컨설팅:</strong> 6평 전후 입시컨설팅 세팅 요청 (동탄 함께 진행). 정기 입콘 학부모 참석 홍보.</li>
+                        <li><strong>교과/멘토:</strong> 현재 국어3/영어3/CA3 (6월 수학 추가 예정). 멘토 주 1회(19~22시) 시수.</li>
+                        <li><strong>멘토 만남:</strong> 올해 미진행이었으나 5월 중 명문대 행사 교입팀 섭외 완료.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>주변 병점고/세마고/국제고 등 성적대 좋은 학교는 대부분 기숙학교로, 평일에 이용불가한 학생이 많아 성적장학 타겟이 맞지 않음.</li>
+                        <li>내신/모고 장학 대신 <strong>리더십 장학</strong> 제작 진행 제안 드렸으며, 원장님 동의함.</li>
+                        <li>1일 무료체험권 홍보가 미진한 부분이 있는 것으로 파악되어 온라인 활용 이미지 추가 예정.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영시간:</strong> 중간고사만 연장X, 계속 평일 25시(새벽 1시) 운영.</li>
+                        <li><strong>학부모상담:</strong> 나영실 원장, 권세희 코치가 생활상담 및 전화 진행 중. 잇생부 총평 원활하게 진행되고 있지 않음.</li>
+                        <li><strong>주말반:</strong> 주말반 2명 운영 중이나 별도 홍보 안 하고 있음.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li><strong>수능선배:</strong> 5/29 옆건물 오픈 예정 (가장 위협적).</li>
+                        <li><strong>디랩:</strong> 점유율 50%(200석), 시설 좋고 교과관리 담임제로 평판 좋음. 오픈 프로모션 강력.</li>
+                        <li><strong>이투스247:</strong> 점유율 1/3, 시설 노후, 오프라인 홍보 안함.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab2" class="tab-pane">
+            <div class="center-header"><h2>수원영통 1, 2 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">1관을 채우고 2관을 채우는 순서로 집중. 러셀의 강력한 장학 공세에 대응하여 센터 자체 특별 장학 30%를 적극 승인 및 활용해야 함.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 장학 조건 대응 및 보고 포맷</strong>
+                            경쟁사 '영통 러셀'의 장학 조건을 세밀히 분석하여 이를 뛰어넘는 경쟁력 있는 장학 제도 설계 지시. 1관/2관 통합 보고 자료 포맷 개선 요망.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차 내 :</strong> 영통 '원장 특별 장학 30%' TO 및 구체적인 성적 커트라인 확정 전달</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 중 :</strong> 지정게시대 런칭 및 경희/아주대 반수생 타겟 홍보 진행</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 N수생 밀착 관리 전환</strong>
+                            N수생 밀착 관리를 위해 고등학생과 동일한 수준의 '원장 직접 상담' 체제로 전면 전환. 외부 행사 확대 필요.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 중 :</strong> 고려대 멘토 만남 행사 실시</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>6월 2주차 :</strong> 외부생 대상 대규모 입시콘서트 개최</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>75.51% (74명)</td><td class="highlight">1관 79.74%<br>2관 63.27%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2월~)</th><th>인입</th><th>결제</th><th>전환율</th></tr>
+                        <tr><td>재수정규</td><td>139건</td><td>31건</td><td>22.3%</td></tr>
+                        <tr><td>반수/썸머</td><td>6건</td><td>0건</td><td>0%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 3월 1관 2회/2관 1회, 4월 0회. 아파트 게시판 진행.</li>
+                        <li>경희대&아주대 대상 반수생 모집 전단지 제작 중. 유신/수원/창현고 홍보 예정. 영통역/수원역 공략.</li>
+                        <li><strong>온라인:</strong> 블로그 주2회(발행 늘릴 계획), 인스타 운영 중.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입시컨설팅:</strong> 6월 둘째 주 외부생/학부모 대상 진행 예정(박상훈 소장).</li>
+                        <li><strong>멘토 만남:</strong> 고려대 선배와의 대화 5월 셋째 주 예정.</li>
+                        <li><strong>교과:</strong> 주간시수 각 5시간 -> 원장 상담 전환 예정.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>원장 특별 장학 30% 쿼터 두고 진행 예정 (본사 컨펌 필요).</li>
+                        <li>입시콘서트 1일 체험권 (당일 결제 시 5% 할인).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영시간:</strong> 1관 24시 / 2관 22시 (전체 학원 n수만).</li>
+                        <li><strong>학부모상담:</strong> 잇생부총평 미실시 중(학부모 전화로 대체).</li>
+                        <li><strong>주말반:</strong> 미운영.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li><strong>영통 러셀:</strong> 장학이 강해서 점유율 영향 줌.</li>
+                        <li><strong>수만휘:</strong> 점유율 57석.</li>
+                        <li><strong>이투스247:</strong> 노후된 시설, 관리 안된다고 소문남, 홍보 안함.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab3" class="tab-pane">
+            <div class="center-header"><h2>안산 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">25년 대비 점유율 하락이 가장 큰 센터로, 원장의 센터 완벽 파악 필요 및 영업 등 전반적인 관리가 필요함. 점유율 확보를 위한 오프라인 홍보, DB관리, 교과/입시 콘텐츠 부분 집중 케어 진행.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 DB 확보 오프라인 홍보 강화</strong>
+                            아파트게시판 완료 확인, 전단 횟수 상향, 지정게시대 배정 여부 확인 필요.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 아파트 게시판 3곳 중 2곳 게시 완료, 나머지 1곳 완료 확인 및 체크 예정(사진확인) / 전단 홍보 횟수 늘려 진행 계획 / 5월 지정게시대 신청 시안 작업 완료 및 업체 제작 중</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 24시 연장 운영 유효 검토</strong>
+                            주변 업체 운영시간 조사 및 심야 재원생 현황을 바탕으로 연장 시 홍보 유효성 검토.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 주변 업체들 운영시간 22시 종료(이투스, 수만휘). 현재 센터 22:30 하원 기준 평균 10명 재원 중. 24시 연장 홍보 포인트 활용 유효성 검토 요청</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 온라인 홍보 미흡, 즉각 시행</strong>
+                            블로그 작성 중단으로 온라인 홍보 미흡. 즉각적 시행 및 퀄리티 개선 필요.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>즉시 :</strong> 블로그 주 2회 발행 바로 시작 (4/25, 4/26 업로드 확인)</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 1주차 :</strong> 블로그 작성 관련 AI 사용법 교육하여 고객들에게 어필될 수 있는 내용 작성 교육 예정</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 선배와의 만남 진행</strong>
+                            동기 부여 및 관리 포인트 어필을 위해 신규 멘토 활용 행사 필요.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 1주차 이내 :</strong> 4/27 출근 신규 멘토 활용. 멘토 섭외 요청 및 간단 소개 기획(4/29 수) 후 진행일 타임라인 결정</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>99.17% (120명)</td><td class="highlight">66.94%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2월~)</th><th>인입</th><th>결제</th><th>전환율</th></tr>
+                        <tr><td>재수/반수/썸머</td><td>150건</td><td>43건</td><td>28.6%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 3월 1회, 4월 4회 진행 (전단 늘려야 함). 매주 수요일 고교/한양대에리카 주변 홍보. 아파트 홍보 3단지 부착.</li>
+                        <li><strong>온라인:</strong> 블로그/인스타 작년 하반기 미운영 → 5월부터 주 2개 재개 완료.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입시컨설팅:</strong> 4/27(월) 진행완료 (학부모 참석).</li>
+                        <li><strong>교과/멘토:</strong> 작년비 교과 만족도 높음. 4/28 새로운 멘토 투입 (선배만남 형식 발표 예정).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>타학원 전환/동반 10%</li>
+                        <li>반수반 10% + 어게인 5%</li>
+                        <li>고등 재학생 20%</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영시간:</strong> 23시 (썸머 후 24시 연장 희망조사 예정).</li>
+                        <li><strong>학부모상담:</strong> 매일 1~2건 통화(특이사항 위주, 입시상담은 미흡).</li>
+                        <li><strong>주말반:</strong> 미운영 (분위기 어수선 우려). 퇴원 방어 위해 매일 원생 면담 중.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li><strong>이투스247:</strong> 50/100석, 최신 시설.</li>
+                        <li><strong>수만휘:</strong> 50/120석, 최신 시설.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab4" class="tab-pane">
+            <div class="center-header"><h2>김포 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">김포고 학생 유출 방어가 최우선. 수능선배의 QR 순찰보다 잇올의 '매니저 대면 밀착 순찰 관리'를 자신감 있게 어필. 누수 공사 조속 해결 필요.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 학생 이탈 방어 및 제휴</strong>
+                            김포고 이탈자 방어를 위한 '환승 할인' 진행. 수능선배-각인학원 제휴에 대응하여 지역 내 국어 학원 컨택 타진.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 중 :</strong> 사우역, 김포고 중심 전단지 홍보 (점유율 90% 달성시까지) 및 지정 게시대 게시</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 1주차 :</strong> 국어 학원 제휴 가능성 컨택 후 보고</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 명문대생 인프라 적극 활용</strong>
+                            전원 명문대생으로 구성된 매니저를 활용하여 학부모/외부 타겟 홍보 및 밀착 관리 강화.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5~6월 중 :</strong> 교입팀 멘토 섭외하여 '명문대 선배와의 만남' 진행, 블로그 홍보</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5월 중 :</strong> 학부모 케어 문자 하루 10명 진행 (담임 교과 하루 1건 무조건 진행)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>91.6% (120명)</td><td class="highlight">85.5%</td></tr>
+                    </table>
+                    <p class="sub-text">* 목표: 5월 말까지 87%(113명) 달성</p>
+                    <p class="sub-text">* 김포고 재원생 감소 뚜렷 (23% -> 14%)</p>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2월~)</th><th>인입</th><th>결제</th><th>전환율</th></tr>
+                        <tr><td>재수정규</td><td>133</td><td>51</td><td>38.3%</td></tr>
+                        <tr><td>반수반</td><td>21</td><td>5</td><td>23.8%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 전단지 안함 -> 5월 사우역, 김포고 등교 홍보 예정.</li>
+                        <li>지정게시대 5월 1주~3주 9곳 게시(결재 완료).</li>
+                        <li><strong>온라인:</strong> 블로그 주 2회 이상, 인스타 미운영.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입시:</strong> 3월 유재웅 소장 봄 입콘(재원생 전원/부모님 5명 참석).</li>
+                        <li><strong>멘토/교과:</strong> CA 1명, 교과 55시간. 월~일 <strong>명문대 매니저 상주</strong>(최대 강점). 멘토 선배 만남 5월 1회 행사성으로 진행 지시.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>3월 모고 장학 대상 없음. 5월 리더십 장학 등 타겟 홍보 예정.</li>
+                        <li><strong>환승할인:</strong> 타 학원 1개월 내 이력 시 첫달 10% (각인학원, 수능선배 이탈자 방어용).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영시간:</strong> 24시 운영 중. 주말반 운영 안함.</li>
+                        <li><strong>학부모전화:</strong> 안함 -> 담임 교과 하루 1건 무조건 진행 지시.</li>
+                        <li><strong>시설(심각):</strong> 누수로 천장 곰팡이. 본사 벽지교체만 안내해 보류중. 사인물은 양호.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li><strong>수능선배:</strong> 작년 12월 오픈. 점유 30%(177석). 시설 훌륭, 명문대 대면 QR순찰 홍보. 김포고생 다수 이탈 추정.</li>
+                        <li><strong>브링독재:</strong> 150석 이상, 인근이나 특별한 경쟁은 아님. 각인학원 수학 연계 유출 점검 필요.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab5" class="tab-pane">
+            <div class="center-header"><h2>김해 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">장유 지역 아파트 집중으로 학군이 그쪽으로 형성 중. 버스로 1시간 걸려 접근성이 떨어지므로, 월 200만 <strong>장유 셔틀</strong> 운영 지속 여부 본사 피드백 필요.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 시내권 밀착 관리 및 타사 견제</strong>
+                            장유 지역 셔틀 투입 미시행(수요 저조). '김해 시내권 밀착 관리'를 통한 점유율 회복. 재학생 프로모션을 활용한 매출 방어.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>즉시 :</strong> '커넥츠프랩' 수능생 및 고시생 35만 원 동일 금액 확인</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>즉시 :</strong> 김해 CA 4/29(수) 출근으로 세팅 완료</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 멘토 홍보 강화</strong>
+                            명문대 선배와의 만남 5월 중 진행 후 전방위적 채널(블로그, 인스타, 네이버밴드) 홍보 진행.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>5~6월 중 :</strong> 교입팀 멘토 섭외하여 '명문대 선배와의 만남' 진행</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>91.24% (125명)</td><td class="highlight">78.1%</td></tr>
+                    </table>
+                    <p class="sub-text">* 공석 31석. 영업목표: 5월 말까지 80% 달성.</p>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2월~)</th><th>인입</th><th>결제</th><th>전환율</th></tr>
+                        <tr><td>재수정규</td><td>132</td><td>50</td><td>37.8%</td></tr>
+                        <tr><td>반수/썸머</td><td>6</td><td>0</td><td>0%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 전단 최소 월 2회 (가야고/경원고 집중). 지정게시대 5월 3곳 당첨.</li>
+                        <li><strong>온라인:</strong> 블로그 주3회, 인스타 운영(주 1~2회 릴스), 자체 밴드 운영.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입시:</strong> 3월 봄 입콘 완료 (임치우).</li>
+                        <li><strong>멘토/교과:</strong> 교과 39시간(CA 1명 구인중). 의대생 멘토 바빠서 만남 섭외 어려움(서기팀 지원요청).</li>
+                        <li>잇생부 5월 본격 진행 예정.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>자체 장학 진행 안함 (점유율보다 매출이 중요하다고 원장님 판단).</li>
+                        <li>재학생 프로모션 40만원권 집중.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>주말반:</strong> 12명 운영 중 (별도 홍보 안함).</li>
+                        <li><strong>운영시간:</strong> 24시 미운영 (수요적음).</li>
+                        <li><strong>학부모전화:</strong> 등원 3주내 월 1회 (학부모 귀찮아함). 구지민 원장 인력 부족 호소.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li><strong>커넥츠프랩:</strong> 점유 80%(120석). 35만원 저가 공세, 공용좌석 시설 차별화.</li>
+                        <li><strong>스카이코어:</strong> 장유 지역 위치, 75만원, 점유율 60%. 아직 잇올로 넘어오는 수요 안 보임.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab6" class="tab-pane">
+            <div class="center-header"><h2>일산 백마 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">백마 지역 자체의 교통과 상권 쇠락의 한계가 명확함. 시설 경쟁에서 밀리므로 <strong>압도적인 입결 수치(메디컬 40%)</strong>와 서울대 강사진으로 시설 노후를 정면 돌파해야 함.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 강점 포인트 활용</strong>
+                            입결 수치 및 서울대 출신 수학교과 등 센터의 강력한 무기를 모든 상담 및 문자에 적극 활용.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>4/22(수) :</strong> 작년 고 1~2 퇴원생 포함 고등 프로모션 전수 발송 및 문자 문안(입결 포함) 반영 완료</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 상권 맞춤 프로모션 즉각 시행</strong>
+                            상권 특성에 맞는 리더십 장학, 환승 할인, 당일 결제 프로모션을 즉각 시행하고, 이를 뒷받침할 영업회의 개최.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>4/24(금) :</strong> 환승할인 및 당일결제 혜택 안내 문자 140건 발송</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>4/24(금) :</strong> 센터 코치진 대상 교육 진행 및 4~5월 단계별 목표(81%→90%) 공유 영업회의 개최</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 고등 리더십 장학 요청 (회장/부회장/반장/부반장 등록 시 10% 중복할인, 1학기 내)</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 공석인 지역입시소장을 대체하여 본사 김동현 과장 주관 오프라인 입시콘서트 일정 조율 (4/27 소통중)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>85.0% (120명)</td><td class="highlight">76.6%</td></tr>
+                    </table>
+                    <p class="sub-text">* 목표: 5월 중순 120석(86%), 5월 말 130석(90%).</p>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <table>
+                        <tr><th>구분(2월~)</th><th>인입</th><th>결제</th><th>전환율</th></tr>
+                        <tr><td>재수정규</td><td>66</td><td>48</td><td>73%</td></tr>
+                    </table>
+                    <p class="sub-text">* 퇴원 1-2명 발생(시간부족/건강 사유)</p>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 26년 0회. 물티슈/무료체험 쿠폰 백마 학원가 배포 예정. 5월 지정게시대 5군데 런칭.</li>
+                        <li><strong>온라인:</strong> 블로그 주 2회 작성 중, 인스타 X.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입결 강점:</strong> 메디컬/명문대 <strong>40%</strong>. 엄청난 무기이므로 무조건 문자/상담 앞단 배치 지시.</li>
+                        <li><strong>교과/멘토:</strong> 서울대 출신 수학 강점. 멘토 2명 운영. 스카이 백마 출신 선배 만남 본사 추진 예정.</li>
+                        <li>입시소장 공백 상태 (요청 예정).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>고등생 타겟 상품권 2만원 증정 프로모션 개시.</li>
+                        <li>식사동 대비 환승 및 당일결제 할인 유도 승인 요청.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영/주말반:</strong> 24시 운영 중 (더 연장 무의미). 주말반 미운영.</li>
+                        <li><strong>학부모전화:</strong> 4월 격주 문자 발송 중 -> 매일 1명 무조건 <strong>원장/교과 전화</strong>로 전환 지시.</li>
+                        <li>시설 노후화. 식사동 신규 학원가로 학기중 고등학생 유출 심함.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황 (식사동 중심)</h3>
+                    <ul>
+                        <li><strong>디랩:</strong> 시설 좋으나 성적 저조.</li>
+                        <li><strong>수만휘:</strong> 100명 점유, 개인 수납장 시설 좋아 여학생 선호.</li>
+                        <li>백마 상권 쇠락, 식사동 자체 해결로 대기자 유입 단절.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab7" class="tab-pane">
+            <div class="center-header"><h2>천안 1, 2관 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">신불당 업체 과포화와 게이트 없는 노후 시설의 약점을 <strong>서울대 의대 입결</strong>과 <strong>온라인 상위노출(마케팅비 지원)</strong>로 극복해야 함. 원장의 직원 관리(인사) 통제력 회복 필요.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 유일 키워드 장악 (입결)</strong>
+                            '천안 유일 서울대 의대 배출', '대치동 출신 논술 강사' 등 타사가 따라올 수 없는 압도적 키워드를 전면에 내세워 홍보.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status done">완료</span>
+                                <div class="action-desc"><strong>즉시 :</strong> 타 지점(청주) 플레이스 대문 사진에서 입결 삭제 (천안 노출 간섭 및 역효과 차단)</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>4/24~4/27 :</strong> '천안 재수학원', '천안 독재' 파워링크 최상단 노출 세팅 및 '유일 서울대 의대' 키워드 심사 요청</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status check">확인중</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 홍보 자동문자 문안(입결강점 위주) 전면 교체 및 코치진 세일즈 교육 완료 여부</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 시설 단점 극복 및 영업 본질 회복</strong>
+                            노후 시설은 관리 부족으로 직결되므로, 대청소 즉시 시행 및 1인실 중심의 공간 홍보 전략으로 우회할 것. 현장 점검 습관화 및 6평 대기수요자 아웃콜.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status check">확인중</span>
+                                <div class="action-desc"><strong>4/27 피드백 :</strong> 6평 문의 전화 시 단순 마감 안내 금지, 상담으로 유도하도록 응대 매뉴얼 점검</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status check">확인중</span>
+                                <div class="action-desc"><strong>4월 5주차 (4/28 확인) :</strong> 구/신도심 아파트 타겟 단지 광고 견적 확보 여부</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 1관 6평 대기자 87명 대상 전수 무료체험 아웃콜 실시</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>관</th><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>1관</td><td>70.2%</td><td class="highlight">67.18%</td></tr>
+                        <tr><td>2관</td><td>51.8%</td><td class="highlight">49.41%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <ul>
+                        <li>1관: 정규 140인입/39결제.</li>
+                        <li>2관: 정규 49인입/23결제.</li>
+                        <li>대기생 2차 접촉 후 방치 경향 (1관 관리 미흡 지적).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 전단 16,000장 살포. 아파트 주50만. 지정게시대 4월 5군데. (2인 근무라 인력난)</li>
+                        <li><strong>온라인:</strong> 블로그 1관 주1-2회, 2관 주3회. <strong>파워블로그(광고) 지원 절실.</strong></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>입결:</strong> 메디컬/명문대 39% (지역 유일 서울대 의대 배출).</li>
+                        <li><strong>교과/멘토:</strong> 수학 약대생 멘토 풀시수. 대치동 출신 국어 논술반 예정. 4/22 입콘 완료. 선배 만남 추진 중.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li>별도 프로모션 내용 없음. 클리닉 도입하려 하나 강사 부재.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li><strong>운영:</strong> 24시 운영. 2관 기숙고교 주말반 1명. 1관 <strong>성인고시반</strong> 검토 중.</li>
+                        <li><strong>학부모전화:</strong> 매주 전화 지속(가장 잘 되고 있음). 시설은 게이트 없고 1관 노후 심각. 수석코치 매너리즘.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황 (신불당 과포화)</h3>
+                    <ul>
+                        <li><strong>아이벡스 하이퍼:</strong> 시대인재 서바 천안 최초 도입 (가장 강력).</li>
+                        <li><strong>수만휘 스파르타, 과수원, 비상에듀, 이투스:</strong> 모두 도보권 69~72만. 만석은 없으나 나눠먹기 극심함. 타사 헛소문 견제 심함.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab8" class="tab-pane">
+            <div class="center-header"><h2>원주 / 강동 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">원주는 부원장 인사 영향으로 분위기 쇄신이 필요하며 점유율 급락에 대응한 밀착 영업 지시. 강동은 수능선배 대비 <strong>잇올의 강한 관리력을</strong> 학부모 통화로 지속 증명하여 5월 내 90% 만석을 달성해야 함.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 [원주] 인적 쇄신 경고</strong>
+                            원장이 실무와 단절된 채 투자자하고만 소통하고 있어 경고 조치. 부원장의 수동적 태도 개선 및 최악의 경우 인적 쇄신 카드 강력 검토.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>4/27 중 :</strong> 주정열 통합 원장 유선 통화 및 현장 인사 이슈 직무 감사 성격의 파악 진행</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 [강동] 스카 마인드 타파 & 기본기 강화</strong>
+                            16만 원대 단순 스터디카페와 비교하는 잘못된 마인드 셋 타파. 입시컨설팅 공백 방어를 위한 사전 홍보 및 영업 기본기인 방치 DB 추적 지시.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>4/27 주간 :</strong> 4월간 방치된 퇴원생 DB 즉각 정리 및 단절된 인원 전수 아웃콜 재개</div>
+                            </div>
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>4월 5주차 :</strong> 전단지 오프라인 홍보 시안 처리 및 장학/반수 타겟 배포 완료 확인</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>지점</th><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>원주</td><td>67.0%</td><td class="highlight">48.95%</td></tr>
+                        <tr><td>강동1</td><td>86.0%</td><td class="highlight">79.8%</td></tr>
+                    </table>
+                    <p class="sub-text">* 강동은 N수 108 / 고등 26. 고등 비중 소폭 상승.</p>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <ul>
+                        <li><strong>강동:</strong> 재수 정규반 70%, 반수 30%. 문의 절반이 결제로 전환되는 매우 양호한 흐름.</li>
+                        <li><strong>원주:</strong> 관련 데이터 없음.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>원주:</strong> 주 1-2회 고교 앞 물티슈/무료체험 오프라인. 인스타 릴스 활용 우수.</li>
+                        <li><strong>강동:</strong> 전단/물티슈 배포 완료. 5월 지정게시대 2곳 추가. 블로그 주2회 (인스타 X). 반수반 프로모션.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li><strong>강동:</strong> 국어 16, 영어 24, 수학 10H, 멘토 15H. 6평 이후 입시컨설팅 주2회 실시 예정.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li><strong>강동:</strong> 올프2, 올키3, 내신1, 원장특별 1명.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li>모두 24시 운영 중.</li>
+                        <li><strong>강동:</strong> 주말반은 재수/반수 꽉 차 미운영. 주2회 원장 직접 학부모 피드백 전달 (매 매우 우수).</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황 (강동 중심)</h3>
+                    <ul>
+                        <li><strong>수능선배:</strong> 2월 오픈, 점유율 낮음(2-30명), 관리 안된다는 소문 돌아 반사이익.</li>
+                        <li><strong>유베이스:</strong> 16만원 관리형 스터디카페. 고등/성인 혼합되어 관리가 약함.</li>
+                        <li>하남미사, 잠실, 송파 등 인근 잇올로의 학생 유출입 빈번함.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab9" class="tab-pane">
+            <div class="center-header"><h2>광주 수완 / 봉선 종합 분석 리포트</h2></div>
+            
+            <div class="card full feedback-box">
+                <h3 class="feedback-title">🎯 8. 종합 의견 및 실행 계획</h3>
+                <p class="feedback-summary">멘토 섭외 불가 지역이므로 본사 교입/서기팀의 비대면 멘토 온라인 지원이 절실함. 봉선센터의 하루 10건 학부모 밀착 관리 사례를 타 센터에 적극 전파하여 <strong>'관리의 잇올'</strong> 브랜드를 지역 내 확고히 해야 함.</p>
+                
+                <div class="integrated-flow">
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 주말반 수요 파악 & 관리력 전파</strong>
+                            '학교 야자 때문에 주말반 수요가 없다'는 막연한 보고를 수용하지 말고 데이터 기반으로 실제 수요를 이중 체크할 것. 봉선 지역의 우수 밀착 관리 타 센터 전파.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status doing">진행중</span>
+                                <div class="action-desc"><strong>즉시 :</strong> 광주/봉선 고등부 주말반 실제 대기 수요 및 야자 연계성 정밀 파악 지시</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-item">
+                        <div class="flow-cause">
+                            <strong>💡 매체 광고 우회 & 경쟁사 특정</strong>
+                            비용 대비 효과가 떨어지는 지정 게시대에 얽매이지 말고 지역 특성에 맞는 버스 쉘터, 지하철 등 매체 광고로 우회할 것. 경쟁 업체 2곳 특정하여 디테일 리스트업 지시.
+                        </div>
+                        <div class="flow-action">
+                            <div class="action-row">
+                                <span class="status todo">예정</span>
+                                <div class="action-desc"><strong>상시 협의 :</strong> 가성비 검토 끝난 대중교통(버스 쉘터, 지하철 등) 옥외 매체 광고 본사 컨펌 대기</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-grid">
+                <div class="card">
+                    <h3>1. 점유율 (2026년 4월 24일 기준)</h3>
+                    <table>
+                        <tr><th>지점</th><th>2025년 4월</th><th>2026년 (현재)</th></tr>
+                        <tr><td>수완</td><td>80.5%</td><td class="highlight">68.24%</td></tr>
+                        <tr><td>봉선</td><td>71.7%</td><td class="highlight">70.99%</td></tr>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>2. DB 인입 현황 / 인입 대비 결제 / 등록률</h3>
+                    <ul>
+                        <li><strong>수완:</strong> 재수 인입 106 / 결제 45.</li>
+                        <li><strong>봉선:</strong> 재수 인입 120 / 결제 46.</li>
+                        <li>공통적으로 썸머/반수 DB는 전무함.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>3. 마케팅 현황</h3>
+                    <ul>
+                        <li><strong>오프라인:</strong> 전단 월 3~4건 지속. 지정게시대 안함(가성비 떨어짐). 버스쉘터 지하철 등 매체광고 선호.</li>
+                        <li><strong>온라인:</strong> 두 센터 모두 블로그 매주 2건 발행.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>4. 교과/입시 현황</h3>
+                    <ul>
+                        <li>입시컨설팅 완료. 지역 특성상 명문대 멘토 섭외 절대 불가. </li>
+                        <li>교과는 전임/파트로 국영수 구성되어 있음 (박인창/김태희/정환태 등).</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>5. 장학/프로모션 현황</h3>
+                    <ul>
+                        <li><strong>수완:</strong> 고등 내신 장학 강력 (1.2이내 65% 등 3명 쿼터).</li>
+                        <li><strong>봉선:</strong> N수/고등 장기결제 할인(3개월 10%), 환승/친구 10% 적극 홍보.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>6. 기타 운영 현황</h3>
+                    <ul>
+                        <li>24시 운영 중. 주말반 미운영.</li>
+                        <li><strong>봉선 학부모 관리:</strong> <strong>하루 10건 통화</strong> (전국 최고 수준).</li>
+                        <li><strong>수완 학부모 관리:</strong> 하루 1건으로 부진함.</li>
+                    </ul>
+                </div>
+                <div class="card full">
+                    <h3>7. 주변 업체 현황</h3>
+                    <ul>
+                        <li>이투스247 (최신시설, 50석), 수만휘(최신시설), 영통 러셀 등 지역 공통 경쟁사 다수.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    function openTab(evt, tabId) {
+        let i, tabPanes, navBtns;
+        tabPanes = document.getElementsByClassName("tab-pane");
+        for (i = 0; i < tabPanes.length; i++) {
+            tabPanes[i].style.display = "none";
+            tabPanes[i].classList.remove("active");
+        }
+        navBtns = document.getElementsByClassName("nav-btn");
+        for (i = 0; i < navBtns.length; i++) {
+            navBtns[i].classList.remove("active");
+        }
+        document.getElementById(tabId).style.display = "block";
+        setTimeout(() => document.getElementById(tabId).classList.add("active"), 10);
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>
